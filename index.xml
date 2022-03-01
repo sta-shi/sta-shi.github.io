@@ -13,7 +13,7 @@
     <author>Author</author>
     <guid>https://sta-shi.github.io/hello-world/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/cow.jpg" referrerpolicy="no-referrer">
-            </div><p>This is the first release of my blog. Welcome.</p>]]></description>
+                <img src="/images/Hello%20World.jpg" referrerpolicy="no-referrer">
+            </div><p>Welcome. This is the first release of my blog.</p>]]></description>
 </item></channel>
 </rss>
