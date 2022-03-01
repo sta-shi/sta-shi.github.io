@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on LzyDog&#39;s Blog</title>
+    <link>https://sta-shi.github.io/post/</link>
+    <description>Recent content in Posts on LzyDog&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 01 Mar 2022 12:13:43 +0800</lastBuildDate><atom:link href="https://sta-shi.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>First Page</title>
+      <link>https://sta-shi.github.io/post/first/</link>
+      <pubDate>Tue, 01 Mar 2022 12:13:43 +0800</pubDate>
+      
+      <guid>https://sta-shi.github.io/post/first/</guid>
+      <description>Hello World Sta-Shi&amp;rsquo;s Here</description>
+    </item>
+    
+  </channel>
+</rss>
