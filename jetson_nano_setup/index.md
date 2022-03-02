@@ -11,7 +11,7 @@
 
 ### Overview
 
-<img src="https://developer.nvidia.com/sites/default/files/akamai/embedded/images/jetsonNano-2GB/getting_started/Jetson-nano-labeled-01.png" alt="img" style="zoom: 67%;" />
+{{< image src="/images/Jetson_Nano_2GB.png" caption="Jetson Nano 2GB" >}}
 
 | Ports                                |                               |
 | :----------------------------------- | :---------------------------- |
