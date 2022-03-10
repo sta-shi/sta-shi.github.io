@@ -4,7 +4,16 @@
         <link>http://stashi.top/tags/jetson-nano/</link>
         <description>Jetson Nano - Tag - Stashi&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>564847411@qq.com (stashi)</managingEditor>
-            <webMaster>564847411@qq.com (stashi)</webMaster><lastBuildDate>Wed, 02 Mar 2022 12:14:37 &#43;0800</lastBuildDate><atom:link href="http://stashi.top/tags/jetson-nano/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>564847411@qq.com (stashi)</webMaster><lastBuildDate>Thu, 10 Mar 2022 16:48:10 &#43;0800</lastBuildDate><atom:link href="http://stashi.top/tags/jetson-nano/" rel="self" type="application/rss+xml" /><item>
+    <title>Jetson Nano AI Fundamental</title>
+    <link>http://stashi.top/jetson_nano_ai_fundamental/</link>
+    <pubDate>Thu, 10 Mar 2022 16:48:10 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>http://stashi.top/jetson_nano_ai_fundamental/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/Jetson_Nano_AI_Fundamental.jpg" referrerpolicy="no-referrer">
+            </div><p><em>This is a guide for training and performing inference on Jetson Nano.</em></p>]]></description>
+</item><item>
     <title>Jetson Nano Setup</title>
     <link>http://stashi.top/jetson_nano_setup/</link>
     <pubDate>Wed, 02 Mar 2022 12:14:37 &#43;0800</pubDate>
