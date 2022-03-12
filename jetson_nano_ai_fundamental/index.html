@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://stashi.top/jetson_nano_ai_fundamental/" /><meta property="og:image" content="http://stashi.top/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-10T16:48:10+08:00" />
-<meta property="article:modified_time" content="2022-03-10T16:48:10+08:00" />
+<meta property="article:modified_time" content="2022-03-12T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://stashi.top/avatar.jpg"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/stashi.top\/jetson_nano_ai_fundamental\/"
-        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  588 ,
-        "url": "http:\/\/stashi.top\/jetson_nano_ai_fundamental\/","datePublished": "2022-03-10T16:48:10+08:00","dateModified": "2022-03-10T16:48:10+08:00","publisher": {
+        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  777 ,
+        "url": "http:\/\/stashi.top\/jetson_nano_ai_fundamental\/","datePublished": "2022-03-10T16:48:10+08:00","dateModified": "2022-03-12T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -120,8 +120,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Jetson Nano AI Fundamental</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>stashi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;588 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;777 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -139,6 +139,7 @@
     <li><a href="#using-imagenet-on-jetson">Using ImageNet on Jetson</a></li>
     <li><a href="#training-keras-model-and-perform-inference">Training Keras Model and Perform Inference</a>
       <ul>
+        <li><a href="#convert-mnist-ubyte-to-jpg">Convert MNIST ubyte to jpg</a></li>
         <li><a href="#read-input-images">Read Input Images</a></li>
         <li><a href="#define-the-network">Define the Network</a></li>
         <li><a href="#train-the-network">Train the Network</a></li>
@@ -180,8 +181,113 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="training-keras-model-and-perform-inference">Training Keras Model and Perform Inference</h2>
-<p>Download MNIST dataset and copy it to &ldquo;dataset/mnist&rdquo;.</p>
-<h3 id="read-input-images">Read Input Images</h3>
+<p>Download and extract four .gz files from <a href="yann.lecun.com/exdb/mnist" rel="">MNIST Database</a>.</p>
+<h3 id="convert-mnist-ubyte-to-jpg">Convert MNIST ubyte to jpg</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">cv2</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">struct</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">save_mnist_to_jpg</span><span class="p">(</span><span class="n">mnist_image_file</span><span class="p">,</span> <span class="n">mnist_label_file</span><span class="p">,</span> <span class="n">save_dir</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="s1">&#39;train&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">mnist_image_file</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;train&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;test&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">labelIndex</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">imageIndex</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lbdata</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">mnist_label_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">magic</span><span class="p">,</span> <span class="n">nums</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s2">&#34;&gt;II&#34;</span><span class="p">,</span> <span class="n">lbdata</span><span class="p">,</span> <span class="n">labelIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">labelIndex</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;&gt;II&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">imgdata</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">mnist_image_file</span><span class="p">,</span> <span class="s2">&#34;rb&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">magic</span><span class="p">,</span> <span class="n">nums</span><span class="p">,</span> <span class="n">numRows</span><span class="p">,</span> <span class="n">numColumns</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s1">&#39;&gt;IIII&#39;</span><span class="p">,</span> <span class="n">imgdata</span><span class="p">,</span> <span class="n">imageIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">imageIndex</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;&gt;IIII&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">label</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s1">&#39;&gt;B&#39;</span><span class="p">,</span> <span class="n">lbdata</span><span class="p">,</span> <span class="n">labelIndex</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">labelIndex</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;&gt;B&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">im</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s1">&#39;&gt;784B&#39;</span><span class="p">,</span> <span class="n">imgdata</span><span class="p">,</span> <span class="n">imageIndex</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">imageIndex</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;&gt;784B&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">img</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">save_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.jpg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">save_name</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_images</span> <span class="o">=</span> <span class="s1">&#39;./train-images-idx3-ubyte&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">train_labels</span> <span class="o">=</span> <span class="s1">&#39;./train-labels-idx1-ubyte&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_images</span> <span class="o">=</span> <span class="s1">&#39;./t10k-images-idx3-ubyte&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">test_labels</span> <span class="o">=</span> <span class="s1">&#39;./t10k-labels-idx1-ubyte&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">save_train_dir</span> <span class="o">=</span> <span class="s1">&#39;./dataset/mnist/training&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">save_test_dir</span> <span class="o">=</span> <span class="s1">&#39;./dataset/mnist/testing&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_train_dir</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_train_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">save_test_dir</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_test_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">save_mnist_to_jpg</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">,</span> <span class="n">save_test_dir</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">save_mnist_to_jpg</span><span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">save_train_dir</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="read-input-images">Read Input Images</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -229,8 +335,8 @@
 </span></span><span class="line"><span class="cl"><span class="c1"># config</span>
 </span></span><span class="line"><span class="cl"><span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span> <span class="o">=</span> <span class="mi">28</span><span class="p">,</span><span class="mi">28</span> <span class="c1">#width &amp; height of input image</span>
 </span></span><span class="line"><span class="cl"><span class="n">input_depth</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">#1: gray image</span>
-</span></span><span class="line"><span class="cl"><span class="n">train_data_dir</span> <span class="o">=</span> <span class="s1">&#39;dataset/mnist/training&#39;</span> <span class="c1">#data training path</span>
-</span></span><span class="line"><span class="cl"><span class="n">testing_data_dir</span> <span class="o">=</span> <span class="s1">&#39;dataset/mnist/testing&#39;</span> <span class="c1">#data testing path</span>
+</span></span><span class="line"><span class="cl"><span class="n">train_data_dir</span> <span class="o">=</span> <span class="s1">&#39;./dataset/mnist/training&#39;</span> <span class="c1">#data training path</span>
+</span></span><span class="line"><span class="cl"><span class="n">testing_data_dir</span> <span class="o">=</span> <span class="s1">&#39;./dataset/mnist/testing&#39;</span> <span class="c1">#data testing path</span>
 </span></span><span class="line"><span class="cl"><span class="n">epochs</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">#number of training epoch</span>
 </span></span><span class="line"><span class="cl"><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">#training batch size</span>
 </span></span><span class="line"><span class="cl">
@@ -468,7 +574,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-03-10</span>
+                <span>Updated on 2022-03-12</span>
             </div>
             <div class="post-info-license"></div>
         </div>
