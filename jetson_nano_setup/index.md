@@ -147,7 +147,7 @@ jupyter lab --generate-config
 nano /home/jetson/.jupyter/jupyter_lab_config.py
 ```
 
-```bash
+```python
 # copy to front of the file
 c.ServerApp.allow_remote_access = True
 c.ExtensionApp.open_browser = False

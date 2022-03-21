@@ -25,7 +25,9 @@ cd build/aarch64/bin
 
 Download and extract four .gz files from [MNIST Database](yann.lecun.com/exdb/mnist).
 
-### Convert MNIST ubyte to jpg
+### Convert MNIST ubyte to Images
+
+Please create folders like './dataset/mnist/training/0' in advance.
 
 ```python
 import numpy as np
@@ -57,7 +59,7 @@ def save_mnist_to_jpg(mnist_image_file, mnist_label_file, save_dir):
         imageIndex += struct.calcsize('>784B')
         im = np.array(im, dtype='uint8')
         img = im.reshape(28, 28)
-        save_name = os.path.join(save_dir, '{}_{}_{}.jpg'.format(prefix, i, label))
+        save_name = os.path.join(save_dir, '{}'.format(label), '{}{}_{}.jpg'.format(prefix, i, label))
         cv2.imwrite(save_name, img)
 
 
@@ -187,6 +189,10 @@ model.fit_generator(
 
 ```python
 print("Training is done!")
+
+if not os.path.exists('./model'):
+		os.makedirs('./model')
+
 model.save('./model/modelLeNet5.h5')
 print("Model is successfully stored!")
 ```
@@ -201,8 +207,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # read the input image using Pillow (you can use another library, e.g., OpenCV)
-img1= Image.open("dataset/mnist/testing/0/img_108.jpg")
-img2= Image.open("dataset/mnist/testing/1/img_0.jpg")
+img1= Image.open("dataset/mnist/testing/0/test3_0.jpg")
+img2= Image.open("dataset/mnist/testing/1/test2_1.jpg")
 # convert to ndarray numpy
 img1 = np.asarray(img1)
 img2 = np.asarray(img2)
@@ -229,6 +235,7 @@ plt.show()
 ## Reference
 
 1. [NVIDIA - Jetson Inference](https://github.com/dusty-nv/jetson-inference)
+1. [hashot - 将mnist数据集转换为JPG图片]()
 2. [Ardian Uman - Tenorflow-TensorRT](https://github.com/ardianumam/Tensorflow-TensorRT)
 
 

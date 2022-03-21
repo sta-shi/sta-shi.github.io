@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://stashi.top/jetson_nano_ai_fundamental/" /><meta property="og:image" content="http://stashi.top/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-10T16:48:10+08:00" />
-<meta property="article:modified_time" content="2022-03-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-21T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://stashi.top/avatar.jpg"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/stashi.top\/jetson_nano_ai_fundamental\/"
-        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  777 ,
-        "url": "http:\/\/stashi.top\/jetson_nano_ai_fundamental\/","datePublished": "2022-03-10T16:48:10+08:00","dateModified": "2022-03-12T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  796 ,
+        "url": "http:\/\/stashi.top\/jetson_nano_ai_fundamental\/","datePublished": "2022-03-10T16:48:10+08:00","dateModified": "2022-03-21T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -120,7 +120,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Jetson Nano AI Fundamental</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>stashi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;777 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;796 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
@@ -139,7 +139,7 @@
     <li><a href="#using-imagenet-on-jetson">Using ImageNet on Jetson</a></li>
     <li><a href="#training-keras-model-and-perform-inference">Training Keras Model and Perform Inference</a>
       <ul>
-        <li><a href="#convert-mnist-ubyte-to-jpg">Convert MNIST ubyte to jpg</a></li>
+        <li><a href="#convert-mnist-ubyte-to-images">Convert MNIST ubyte to Images</a></li>
         <li><a href="#read-input-images">Read Input Images</a></li>
         <li><a href="#define-the-network">Define the Network</a></li>
         <li><a href="#train-the-network">Train the Network</a></li>
@@ -182,7 +182,8 @@
 </div>
 </div><h2 id="training-keras-model-and-perform-inference">Training Keras Model and Perform Inference</h2>
 <p>Download and extract four .gz files from <a href="yann.lecun.com/exdb/mnist" rel="">MNIST Database</a>.</p>
-<h3 id="convert-mnist-ubyte-to-jpg">Convert MNIST ubyte to jpg</h3>
+<h3 id="convert-mnist-ubyte-to-images">Convert MNIST ubyte to Images</h3>
+<p>Please create folders like &lsquo;./dataset/mnist/training/0&rsquo; in advance.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -265,7 +266,7 @@
 </span></span><span class="line"><span class="cl">        <span class="n">imageIndex</span> <span class="o">+=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;&gt;784B&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">im</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="n">img</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">save_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.jpg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">save_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="s1">&#39;</span><span class="si">{}{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.jpg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">        <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">save_name</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">
@@ -492,9 +493,17 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Training is done!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;./model&#39;</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">		<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s1">&#39;./model&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./model/modelLeNet5.h5&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Model is successfully stored!&#34;</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
@@ -541,8 +550,8 @@
 </span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># read the input image using Pillow (you can use another library, e.g., OpenCV)</span>
-</span></span><span class="line"><span class="cl"><span class="n">img1</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/0/img_108.jpg&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">img2</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/1/img_0.jpg&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img1</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/0/test3_0.jpg&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img2</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/1/test2_1.jpg&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="c1"># convert to ndarray numpy</span>
 </span></span><span class="line"><span class="cl"><span class="n">img1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">img2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img2</span><span class="p">)</span>
@@ -569,12 +578,13 @@
 </div><h2 id="reference">Reference</h2>
 <ol>
 <li><a href="https://github.com/dusty-nv/jetson-inference" target="_blank" rel="noopener noreffer">NVIDIA - Jetson Inference</a></li>
+<li><a href="" rel="">hashot - 将mnist数据集转换为JPG图片</a></li>
 <li><a href="https://github.com/ardianumam/Tensorflow-TensorRT" target="_blank" rel="noopener noreffer">Ardian Uman - Tenorflow-TensorRT</a></li>
 </ol></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-03-12</span>
+                <span>Updated on 2022-03-21</span>
             </div>
             <div class="post-info-license"></div>
         </div>
