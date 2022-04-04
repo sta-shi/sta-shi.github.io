@@ -5,7 +5,7 @@
 
 <!--more-->
 
-## Using ImageNet on Jetson
+## Use ImageNet on Jetson
 
 ```bash
 git clone --recursive https://github.com/dusty-nv/jetson-inference
@@ -21,7 +21,7 @@ cd build/aarch64/bin
 ./imagenet "images/cat_*.jpg" "images/test/cat_%i.jpg"
 ```
 
-## Training Keras Model and Perform Inference
+## Train Keras Model and Perform Inference
 
 Download and extract four .gz files from [MNIST Database](yann.lecun.com/exdb/mnist).
 

@@ -20,7 +20,7 @@
 <meta name="application-name" content="Stashi&#39;s Hollow">
 <meta name="apple-mobile-web-app-title" content="Stashi&#39;s Hollow"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://stashi.top/jetson_nano_ai_fundamental/" /><link rel="prev" href="http://stashi.top/jetson_nano_setup/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://stashi.top/jetson_nano_ai_fundamental/" /><link rel="prev" href="http://stashi.top/jetson_nano_setup/" /><link rel="next" href="http://stashi.top/jetson_nano_tensorrt/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -136,8 +136,8 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#using-imagenet-on-jetson">Using ImageNet on Jetson</a></li>
-    <li><a href="#training-keras-model-and-perform-inference">Training Keras Model and Perform Inference</a>
+    <li><a href="#use-imagenet-on-jetson">Use ImageNet on Jetson</a></li>
+    <li><a href="#train-keras-model-and-perform-inference">Train Keras Model and Perform Inference</a>
       <ul>
         <li><a href="#convert-mnist-ubyte-to-images">Convert MNIST ubyte to Images</a></li>
         <li><a href="#read-input-images">Read Input Images</a></li>
@@ -151,7 +151,7 @@
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><em>This is a guide for training and performing inference on Jetson Nano.</em></p>
-<h2 id="using-imagenet-on-jetson">Using ImageNet on Jetson</h2>
+<h2 id="use-imagenet-on-jetson">Use ImageNet on Jetson</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -180,7 +180,7 @@
 </span></span><span class="line"><span class="cl">./imagenet <span class="s2">&#34;images/cat_*.jpg&#34;</span> <span class="s2">&#34;images/test/cat_%i.jpg&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="training-keras-model-and-perform-inference">Training Keras Model and Perform Inference</h2>
+</div><h2 id="train-keras-model-and-perform-inference">Train Keras Model and Perform Inference</h2>
 <p>Download and extract four .gz files from <a href="yann.lecun.com/exdb/mnist" rel="">MNIST Database</a>.</p>
 <h3 id="convert-mnist-ubyte-to-images">Convert MNIST ubyte to Images</h3>
 <p>Please create folders like &lsquo;./dataset/mnist/training/0&rsquo; in advance.</p>
@@ -603,7 +603,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/jetson_nano_setup/" class="prev" rel="prev" title="Jetson Nano Setup"><i class="fas fa-angle-left fa-fw"></i>Jetson Nano Setup</a></div>
+    <div class="post-nav"><a href="/jetson_nano_setup/" class="prev" rel="prev" title="Jetson Nano Setup"><i class="fas fa-angle-left fa-fw"></i>Jetson Nano Setup</a>
+            <a href="/jetson_nano_tensorrt/" class="next" rel="next" title="Jetson Nano TensorRT">Jetson Nano TensorRT<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
