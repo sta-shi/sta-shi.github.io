@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/stashi.top\/jetson_nano_tensorrt\/"
-        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  591 ,
+        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  880 ,
         "url": "http:\/\/stashi.top\/jetson_nano_tensorrt\/","datePublished": "2022-04-04T14:02:36+08:00","dateModified": "2022-04-04T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -120,8 +120,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Jetson Nano TensorRT</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>stashi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-04">2022-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;591 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-04">2022-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;880 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -143,6 +143,7 @@
         <li><a href="#optimize-frozen-model-to-tensorrt-graph">Optimize Frozen Model to TensorRT Graph</a></li>
       </ul>
     </li>
+    <li><a href="#method-2-convert-keras-model-to-tensorflow-frozen-model">Method 2: Convert Keras Model to Tensorflow Frozen Model</a></li>
     <li><a href="#perform-inference-with-tensorrt-model">Perform Inference with TensorRT Model</a></li>
   </ul>
 </nav></div>
@@ -275,6 +276,109 @@
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">gfile</span><span class="o">.</span><span class="n">FastGFile</span><span class="p">(</span><span class="s2">&#34;./model/TensorRT_model.pb&#34;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">trt_graph</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;TensorRT model is successfully stored!&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="method-2-convert-keras-model-to-tensorflow-frozen-model">Method 2: Convert Keras Model to Tensorflow Frozen Model</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># This line must be executed before loading Keras model.</span>
+</span></span><span class="line"><span class="cl"><span class="n">K</span><span class="o">.</span><span class="n">set_learning_phase</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
+</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;./model/keras_model.h5&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [&lt;tf.Tensor &#39;dense_2/Softmax:0&#39; shape=(?, 10) dtype=float32&gt;]</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># [&lt;tf.Tensor &#39;conv2d_1_input:0&#39; shape=(?, 28, 28, 1) dtype=float32&gt;]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">freeze_session</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">keep_var_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clear_devices</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Freezes the state of a session into a pruned computation graph.
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">    Creates a new computation graph where variable nodes are replaced by
+</span></span></span><span class="line"><span class="cl"><span class="s2">    constants taking their current value in the session. The new graph will be
+</span></span></span><span class="line"><span class="cl"><span class="s2">    pruned so subgraphs that are not necessary to compute the requested
+</span></span></span><span class="line"><span class="cl"><span class="s2">    outputs are removed.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    @param session The TensorFlow session to be frozen.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    @param keep_var_names A list of variable names that should not be frozen,
+</span></span></span><span class="line"><span class="cl"><span class="s2">                          or None to freeze all the variables in the graph.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    @param output_names Names of the relevant graph outputs.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    @param clear_devices Remove the device directives from the graph for better portability.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    @return The frozen graph definition.
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kn">from</span> <span class="nn">tensorflow.python.framework.graph_util</span> <span class="kn">import</span> <span class="n">convert_variables_to_constants</span>
+</span></span><span class="line"><span class="cl">    <span class="n">graph</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">graph</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">graph</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">        <span class="n">freeze_var_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables</span><span class="p">())</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">keep_var_names</span> <span class="ow">or</span> <span class="p">[]))</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_names</span> <span class="o">=</span> <span class="n">output_names</span> <span class="ow">or</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output_names</span> <span class="o">+=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables</span><span class="p">()]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># Graph -&gt; GraphDef ProtoBuf</span>
+</span></span><span class="line"><span class="cl">        <span class="n">input_graph_def</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">as_graph_def</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">clear_devices</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">input_graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">node</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">frozen_graph</span> <span class="o">=</span> <span class="n">convert_variables_to_constants</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">input_graph_def</span><span class="p">,</span> <span class="n">output_names</span><span class="p">,</span> <span class="n">freeze_var_names</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">frozen_graph</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">frozen_graph</span> <span class="o">=</span> <span class="n">freeze_session</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">get_session</span><span class="p">(),</span> <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="n">out</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">outputs</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">                              
+</span></span><span class="line"><span class="cl"><span class="c1"># Save to ./model/tf_model.pb</span>
+</span></span><span class="line"><span class="cl"><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">frozen_graph</span><span class="p">,</span> <span class="s2">&#34;model&#34;</span><span class="p">,</span> <span class="s2">&#34;tf_model.pb&#34;</span><span class="p">,</span> <span class="n">as_text</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="perform-inference-with-tensorrt-model">Perform Inference with TensorRT Model</h2>
