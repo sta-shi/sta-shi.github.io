@@ -29,7 +29,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/stashi.top\/jetson_nano_tensorrt\/"
-        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  880 ,
+        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  978 ,
         "url": "http:\/\/stashi.top\/jetson_nano_tensorrt\/","datePublished": "2022-04-04T14:02:36+08:00","dateModified": "2022-04-04T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -120,22 +120,23 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Jetson Nano TensorRT</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>stashi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-04">2022-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;880 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-04-04">2022-04-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;978 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;5 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="images/Jetson_Nano_AI_Fundamental.jpg"
-        data-srcset="/images/Jetson_Nano_AI_Fundamental.jpg, images/Jetson_Nano_AI_Fundamental.jpg 1.5x, /images/Jetson_Nano_AI_Fundamental.jpg 2x"
+        data-src="images/Jetson_Nano_TensorRT.jpg"
+        data-srcset="/images/Jetson_Nano_TensorRT.jpg, images/Jetson_Nano_TensorRT.jpg 1.5x, /images/Jetson_Nano_TensorRT.jpg 2x"
         data-sizes="auto"
-        alt="/images/Jetson_Nano_AI_Fundamental.jpg"
-        title="/images/Jetson_Nano_AI_Fundamental.jpg" /></div><div class="details toc" id="toc-static"  kept="true">
+        alt="/images/Jetson_Nano_TensorRT.jpg"
+        title="/images/Jetson_Nano_TensorRT.jpg" /></div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
+    <li><a href="#overview">Overview</a></li>
     <li><a href="#convert-keras-model-to-tensorflow-model">Convert Keras Model to Tensorflow Model</a></li>
     <li><a href="#use-tensorrt-to-optimize-tensorflow-model">Use TensorRT to Optimize Tensorflow Model</a>
       <ul>
@@ -143,11 +144,24 @@
         <li><a href="#optimize-frozen-model-to-tensorrt-graph">Optimize Frozen Model to TensorRT Graph</a></li>
       </ul>
     </li>
-    <li><a href="#method-2-convert-keras-model-to-tensorflow-frozen-model">Method 2: Convert Keras Model to Tensorflow Frozen Model</a></li>
     <li><a href="#perform-inference-with-tensorrt-model">Perform Inference with TensorRT Model</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>This is a guide for TensorRT optimization.</p>
+<h2 id="overview">Overview</h2>
+<figure><a class="lightgallery" href="/images/Keras_to_TensorRT.png" title="/images/Keras_to_TensorRT.png" data-thumbnail="/images/Keras_to_TensorRT.png" data-sub-html="<h2>Convert Keras Model to TensorRT</h2>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/images/Keras_to_TensorRT.png"
+            data-srcset="/images/Keras_to_TensorRT.png, /images/Keras_to_TensorRT.png 1.5x, /images/Keras_to_TensorRT.png 2x"
+            data-sizes="auto"
+            alt="/images/Keras_to_TensorRT.png" />
+    </a><figcaption class="image-caption">Convert Keras Model to TensorRT</figcaption>
+    </figure>
+<p>Tensorflow has two versions: v1 and v2. v2 has a poor compatiblity to v1. On aurthor&rsquo;s unit the code doesn&rsquo;t work (some modules cannot be found), so I reinstalled Tensorflow 1.15.0 and re-trained the model (since Keras can&rsquo;t operate models trained by higher vesion). Also, it&rsquo;s found inconvenient to download wheel from NVIDIA download website in China. I download wheel from other device and install Tensorflow with pip3 wheel tool.</p>
+<p>Furthermore, in original code by Ardian Uman, a cap is set for TensorRT, which leads to system dump. After removing it, I can optimize Tensorflow model with TensorRT and run TensorRT model as well.</p>
+<p>In the process of performing inference, it&rsquo;s found that first several inferences of TensorRT model costs a rather long period that significantly influences the result. To obtain a &ldquo;seemingly reasonable&rdquo; average time, I abandoned first ten results of each model inference. Reason for the weird phenomenon remains studying.</p>
 <h2 id="convert-keras-model-to-tensorflow-model">Convert Keras Model to Tensorflow Model</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -176,7 +190,7 @@
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># path we wanna save our converted TF-model</span>
-</span></span><span class="line"><span class="cl"><span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="s2">&#34;./model&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="s2">&#34;./model/TensorFlow&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># load the Keras model</span>
 </span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;./model/modelLeNet5.h5&#39;</span><span class="p">)</span>
@@ -226,11 +240,11 @@
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">tensorflow.python.platform</span> <span class="kn">import</span> <span class="n">gfile</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># has to be use this setting to make a session for TensorRT optimization</span>
-</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># import the meta graph of the tensorflow model</span>
-</span></span><span class="line"><span class="cl">    <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">import_meta_graph</span><span class="p">(</span><span class="s2">&#34;./model/modelLeNet5.meta&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">import_meta_graph</span><span class="p">(</span><span class="s2">&#34;./model/TensorFlow.meta&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># then, restore the weights to the meta graph</span>
-</span></span><span class="line"><span class="cl">    <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="s2">&#34;./model/modelLeNet5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="s2">&#34;./model/TensorFlow&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="c1"># specify which tensor output you want to obtain </span>
 </span></span><span class="line"><span class="cl">    <span class="c1"># (correspond to prediction result)</span>
@@ -262,6 +276,13 @@
 </span><span class="lnt">10
 </span><span class="lnt">11
 </span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># convert (optimize) frozen model to TensorRT model</span>
@@ -276,109 +297,13 @@
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">gfile</span><span class="o">.</span><span class="n">FastGFile</span><span class="p">(</span><span class="s2">&#34;./model/TensorRT_model.pb&#34;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">trt_graph</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;TensorRT model is successfully stored!&#34;</span><span class="p">)</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="method-2-convert-keras-model-to-tensorflow-frozen-model">Method 2: Convert Keras Model to Tensorflow Frozen Model</h2>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span><span class="lnt">48
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># This line must be executed before loading Keras model.</span>
-</span></span><span class="line"><span class="cl"><span class="n">K</span><span class="o">.</span><span class="n">set_learning_phase</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">load_model</span>
-</span></span><span class="line"><span class="cl"><span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="s1">&#39;./model/keras_model.h5&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># [&lt;tf.Tensor &#39;dense_2/Softmax:0&#39; shape=(?, 10) dtype=float32&gt;]</span>
-</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># [&lt;tf.Tensor &#39;conv2d_1_input:0&#39; shape=(?, 28, 28, 1) dtype=float32&gt;]</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">freeze_session</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">keep_var_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">clear_devices</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Freezes the state of a session into a pruned computation graph.
-</span></span></span><span class="line"><span class="cl"><span class="s2">
-</span></span></span><span class="line"><span class="cl"><span class="s2">    Creates a new computation graph where variable nodes are replaced by
-</span></span></span><span class="line"><span class="cl"><span class="s2">    constants taking their current value in the session. The new graph will be
-</span></span></span><span class="line"><span class="cl"><span class="s2">    pruned so subgraphs that are not necessary to compute the requested
-</span></span></span><span class="line"><span class="cl"><span class="s2">    outputs are removed.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    @param session The TensorFlow session to be frozen.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    @param keep_var_names A list of variable names that should not be frozen,
-</span></span></span><span class="line"><span class="cl"><span class="s2">                          or None to freeze all the variables in the graph.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    @param output_names Names of the relevant graph outputs.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    @param clear_devices Remove the device directives from the graph for better portability.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    @return The frozen graph definition.
-</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="kn">from</span> <span class="nn">tensorflow.python.framework.graph_util</span> <span class="kn">import</span> <span class="n">convert_variables_to_constants</span>
-</span></span><span class="line"><span class="cl">    <span class="n">graph</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">graph</span>
-</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">graph</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">        <span class="n">freeze_var_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables</span><span class="p">())</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">keep_var_names</span> <span class="ow">or</span> <span class="p">[]))</span>
-</span></span><span class="line"><span class="cl">        <span class="n">output_names</span> <span class="o">=</span> <span class="n">output_names</span> <span class="ow">or</span> <span class="p">[]</span>
-</span></span><span class="line"><span class="cl">        <span class="n">output_names</span> <span class="o">+=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tf</span><span class="o">.</span><span class="n">global_variables</span><span class="p">()]</span>
-</span></span><span class="line"><span class="cl">        <span class="c1"># Graph -&gt; GraphDef ProtoBuf</span>
-</span></span><span class="line"><span class="cl">        <span class="n">input_graph_def</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">as_graph_def</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">clear_devices</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">input_graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">                <span class="n">node</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&#34;&#34;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">frozen_graph</span> <span class="o">=</span> <span class="n">convert_variables_to_constants</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">input_graph_def</span><span class="p">,</span> <span class="n">output_names</span><span class="p">,</span> <span class="n">freeze_var_names</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">frozen_graph</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">frozen_graph</span> <span class="o">=</span> <span class="n">freeze_session</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">get_session</span><span class="p">(),</span> <span class="n">output_names</span><span class="o">=</span><span class="p">[</span><span class="n">out</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">out</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">outputs</span><span class="p">])</span>
-</span></span><span class="line"><span class="cl">                              
-</span></span><span class="line"><span class="cl"><span class="c1"># Save to ./model/tf_model.pb</span>
-</span></span><span class="line"><span class="cl"><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">write_graph</span><span class="p">(</span><span class="n">frozen_graph</span><span class="p">,</span> <span class="s2">&#34;model&#34;</span><span class="p">,</span> <span class="s2">&#34;tf_model.pb&#34;</span><span class="p">,</span> <span class="n">as_text</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">frozen_graph</span><span class="o">.</span><span class="n">node</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;numb. of all_nodes in frozen graph:&#34;</span><span class="p">,</span> <span class="n">all_nodes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">trt_engine_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">trt_graph</span><span class="o">.</span><span class="n">node</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">op</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;TRTEngineOp&#39;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;numb. of trt_engine_nodes in TensorRT graph:&#34;</span><span class="p">,</span> <span class="n">trt_engine_nodes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">all_nodes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">trt_graph</span><span class="o">.</span><span class="n">node</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;numb. of all_nodes in TensorRT graph:&#34;</span><span class="p">,</span> <span class="n">all_nodes</span><span class="p">)</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="perform-inference-with-tensorrt-model">Perform Inference with TensorRT Model</h2>
@@ -435,6 +360,45 @@
 </span><span class="lnt">49
 </span><span class="lnt">50
 </span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span><span class="lnt">88
+</span><span class="lnt">89
+</span><span class="lnt">90
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># import the needed libraries</span>
@@ -447,8 +411,8 @@
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># read the testing images (only for example)</span>
-</span></span><span class="line"><span class="cl"><span class="n">img1</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/0/img_108.jpg&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">img2</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/1/img_0.jpg&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img1</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/0/test3_0.jpg&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">img2</span><span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&#34;dataset/mnist/testing/1/test2_1.jpg&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">img1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">img2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">img2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">input_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">img1</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">img2</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -462,12 +426,40 @@
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="n">graph_def</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl"><span class="c1"># perform inference</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># variable</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># original model</span>
+</span></span><span class="line"><span class="cl"><span class="n">FROZEN_MODEL_PATH</span> <span class="o">=</span> <span class="s1">&#39;./model/frozen_model.pb&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">graph</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">graph</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># read frozen model</span>
+</span></span><span class="line"><span class="cl">        <span class="n">trt_graph</span> <span class="o">=</span> <span class="n">read_pb_graph</span><span class="p">(</span><span class="n">FROZEN_MODEL_PATH</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># obtain the corresponding input-output tensor</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tf</span><span class="o">.</span><span class="n">import_graph_def</span><span class="p">(</span><span class="n">trt_graph</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">input</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="s1">&#39;input_tensor_input:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="s1">&#39;output_tensor/Softmax:0&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># in this case, it demonstrates to perform inference for 50 times</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n_time_inference</span> <span class="o">=</span> <span class="mi">100</span>
+</span></span><span class="line"><span class="cl">        <span class="n">out_pred</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="nb">input</span><span class="p">:</span> <span class="n">input_img</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_time_inference</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">out_pred</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="nb">input</span><span class="p">:</span> <span class="n">input_img</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">            <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">delta_time</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">               <span class="n">total_time</span> <span class="o">+=</span> <span class="n">delta_time</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Needed time in inference &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;: &#34;</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">avg_time_original_model</span> <span class="o">=</span> <span class="n">total_time</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_time_inference</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Average inference time: &#34;</span><span class="p">,</span> <span class="n">avg_time_original_model</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># TensorRT model</span>
 </span></span><span class="line"><span class="cl"><span class="n">TENSORRT_MODEL_PATH</span> <span class="o">=</span> <span class="s1">&#39;./model/TensorRT_model.pb&#39;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">graph</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">graph</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
-</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span><span class="n">gpu_options</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">GPUOptions</span><span class="p">(</span><span class="n">per_process_gpu_memory_fraction</span><span class="o">=</span><span class="mf">0.50</span><span class="p">)))</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="c1"># read TensorRT model</span>
 </span></span><span class="line"><span class="cl">        <span class="n">trt_graph</span> <span class="o">=</span> <span class="n">read_pb_graph</span><span class="p">(</span><span class="n">TENSORRT_MODEL_PATH</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -477,17 +469,28 @@
 </span></span><span class="line"><span class="cl">        <span class="n">output</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="s1">&#39;output_tensor/Softmax:0&#39;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="c1"># in this case, it demonstrates to perform inference for 50 times</span>
-</span></span><span class="line"><span class="cl">        <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n_time_inference</span> <span class="o">=</span> <span class="mi">50</span>
+</span></span><span class="line"><span class="cl">        <span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">n_time_inference</span> <span class="o">=</span> <span class="mi">100</span>
 </span></span><span class="line"><span class="cl">        <span class="n">out_pred</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="nb">input</span><span class="p">:</span> <span class="n">input_img</span><span class="p">})</span>
 </span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_time_inference</span><span class="p">):</span>
 </span></span><span class="line"><span class="cl">            <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="n">out_pred</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="nb">input</span><span class="p">:</span> <span class="n">input_img</span><span class="p">})</span>
 </span></span><span class="line"><span class="cl">            <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="n">delta_time</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
-</span></span><span class="line"><span class="cl">            <span class="n">total_time</span> <span class="o">+=</span> <span class="n">delta_time</span>
-</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;needed time in inference-&#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;: &#34;</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="n">avg_time_tensorRT</span> <span class="o">=</span> <span class="n">total_time</span> <span class="o">/</span> <span class="n">n_time_inference</span>
-</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;average inference time: &#34;</span><span class="p">,</span> <span class="n">avg_time_tensorRT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">i</span><span class="o">&gt;</span><span class="mi">9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">               <span class="n">total_time</span> <span class="o">+=</span> <span class="n">delta_time</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Needed time in inference &#34;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&#34;: &#34;</span><span class="p">,</span> <span class="n">delta_time</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">avg_time_tensorRT</span> <span class="o">=</span> <span class="n">total_time</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_time_inference</span><span class="o">-</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Average inference time: &#34;</span><span class="p">,</span> <span class="n">avg_time_tensorRT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;TensorRT improvement compared to the original model:&#34;</span><span class="p">,</span> <span class="n">avg_time_original_model</span><span class="o">/</span><span class="n">avg_time_tensorRT</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s1">&#39;img 1&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pred: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">out_pred</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="s1">&#39;img 2&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pred: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">out_pred</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></div><div class="post-footer" id="post-footer">
@@ -501,7 +504,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://stashi.top/jetson_nano_tensorrt/" data-title="Jetson Nano TensorRT" data-hashtags="Article,Jetson Nano"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://stashi.top/jetson_nano_tensorrt/" data-hashtag="Article"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://stashi.top/jetson_nano_tensorrt/" data-title="Jetson Nano TensorRT" data-image="images/Jetson_Nano_AI_Fundamental.jpg"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="http://stashi.top/jetson_nano_tensorrt/" data-title="Jetson Nano TensorRT"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://stashi.top/jetson_nano_tensorrt/" data-title="Jetson Nano TensorRT" data-hashtags="Article,Jetson Nano"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://stashi.top/jetson_nano_tensorrt/" data-hashtag="Article"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://stashi.top/jetson_nano_tensorrt/" data-title="Jetson Nano TensorRT" data-image="images/Jetson_Nano_TensorRT.jpg"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="http://stashi.top/jetson_nano_tensorrt/" data-title="Jetson Nano TensorRT"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
