@@ -11,7 +11,7 @@
 
 ### Overview
 
-{{< image src="/images/Jetson_Nano_2GB.png" caption="Jetson Nano 2GB" >}}
+{{< image src="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png" caption="Jetson Nano 2GB" >}}
 
 | Ports                                |                               |
 | :----------------------------------- | :---------------------------- |
@@ -35,29 +35,6 @@
 3. Connect monitor, keyboard, mouse and USB-C power supply (5V⎓3A)
 4. Boot and setup
 
-## Change Source
-
-### Change Ubuntu Source
-
-```bash
-sudo nano /etc/apt/sources.list
-```
-
-```bash
-# delete all contents
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backports main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
-```
-
-### Install and Change pip3 Source
-
-```bash
-sudo apt install python3-pip
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-```
-
 ## Pytorch
 
 ### PyTorch pip wheels
@@ -66,7 +43,13 @@ Will install PyTorch v1.10.0 since the image is embedded with JetPack 4.6.
 
 ### Installation
 
-1. Install Pytorch
+1. Install pip3
+
+   ```bash
+   sudo apt install python3-pip
+   ```
+   
+2. Install Pytorch
 
    ```bash
    wget https://nvidia.box.com/shared/static/fjtbno0vpo676a25cgvuqc1wty0fkkg6.whl -O torch-1.10.0-cp36-cp36m-linux_aarch64.whl
@@ -115,10 +98,9 @@ print(torchvision.__version__)
 sudo apt-get update
 sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
 sudo apt-get install python3-pip
-pip3 install -U pip testresources setuptools==49.6.0 
 pip3 install -U --no-deps numpy==1.19.4 future==0.18.2 mock==3.0.5 keras_preprocessing==1.1.2 keras_applications==1.0.8 gast==0.4.0 protobuf pybind11 cython pkgconfig
-env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
-# if h5py installation failed, try "pip3 install h5py", which will install h5py 2.10.0
+sudo env H5PY_SETUP_REQUIRES=0 pip3 install -U h5py==3.1.0
+pip3 install -U pip testresources setuptools==49.6.0 
 pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 ```
 
@@ -130,37 +112,6 @@ python3
 
 ```python
 import tensorflow
-```
-
-## JupyterLab
-
-### Installation
-
-```bash
-pip3 install jupyterlab==3
-jupyter lab --generate-config
-```
-
-### Setting
-
-```bash
-nano /home/jetson/.jupyter/jupyter_lab_config.py
-```
-
-```python
-# copy to front of the file
-c.ServerApp.allow_remote_access = True
-c.ExtensionApp.open_browser = False
-c.ServerApp.ip = '0.0.0.0'
-c.ServerApp.password_required = False
-c.ServerApp.port = 8888
-c.ServerApp.token = ''
-```
-
-### Usage
-
-```bash
-jupyter lab 
 ```
 
 ## Reference

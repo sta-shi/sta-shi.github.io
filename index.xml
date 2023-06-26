@@ -4,16 +4,25 @@
         <link>http://stashi.top/</link>
         <description>This is Stashi&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>564847411@qq.com (stashi)</managingEditor>
-            <webMaster>564847411@qq.com (stashi)</webMaster><lastBuildDate>Mon, 04 Apr 2022 14:02:36 &#43;0800</lastBuildDate>
+            <webMaster>564847411@qq.com (stashi)</webMaster><lastBuildDate>Mon, 26 Jun 2023 21:30:43 &#43;0800</lastBuildDate>
             <atom:link href="http://stashi.top/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>2023.6.26 无聊的毕业季</title>
+    <link>http://stashi.top/blog_20230626/</link>
+    <pubDate>Mon, 26 Jun 2023 21:30:43 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>http://stashi.top/blog_20230626/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="/images/20230626/Cover.jpg" referrerpolicy="no-referrer">
+            </div><p><em>Update with some recent photos.</em></p>]]></description>
+</item><item>
     <title>Jetson Nano TensorRT</title>
     <link>http://stashi.top/jetson_nano_tensorrt/</link>
     <pubDate>Mon, 04 Apr 2022 14:02:36 &#43;0800</pubDate>
     <author>Author</author>
     <guid>http://stashi.top/jetson_nano_tensorrt/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Jetson_Nano_TensorRT.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Jetson_Nano_TensorRT/Cover.jpg" referrerpolicy="no-referrer">
             </div><p>This is a guide for TensorRT optimization.</p>]]></description>
 </item><item>
     <title>Jetson Nano AI Fundamental</title>
@@ -22,7 +31,7 @@
     <author>Author</author>
     <guid>http://stashi.top/jetson_nano_ai_fundamental/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Jetson_Nano_AI_Fundamental.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Jetson_Nano_AI_Fundamental/Cover.jpg" referrerpolicy="no-referrer">
             </div><p><em>This is a guide for training and performing inference on Jetson Nano.</em></p>]]></description>
 </item><item>
     <title>Jetson Nano Setup</title>
@@ -31,7 +40,7 @@
     <author>Author</author>
     <guid>http://stashi.top/jetson_nano_setup/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Jetson_Nano_Setup.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Jetson_Nano_Setup/Cover.jpg" referrerpolicy="no-referrer">
             </div><p><em>This is a Quick Start for Jetson Nano.</em></p>]]></description>
 </item><item>
     <title>Hello World</title>
@@ -40,7 +49,7 @@
     <author>Author</author>
     <guid>http://stashi.top/hello_world/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Hello_World.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Hello_World/Cover.jpg" referrerpolicy="no-referrer">
             </div><p><em>Welcome. This is the first post of my blog.</em></p>]]></description>
 </item></channel>
 </rss>

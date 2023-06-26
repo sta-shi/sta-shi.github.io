@@ -11,7 +11,7 @@
     <author>Author</author>
     <guid>http://stashi.top/jetson_nano_tensorrt/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Jetson_Nano_TensorRT.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Jetson_Nano_TensorRT/Cover.jpg" referrerpolicy="no-referrer">
             </div><p>This is a guide for TensorRT optimization.</p>]]></description>
 </item><item>
     <title>Jetson Nano AI Fundamental</title>
@@ -20,7 +20,7 @@
     <author>Author</author>
     <guid>http://stashi.top/jetson_nano_ai_fundamental/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Jetson_Nano_AI_Fundamental.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Jetson_Nano_AI_Fundamental/Cover.jpg" referrerpolicy="no-referrer">
             </div><p><em>This is a guide for training and performing inference on Jetson Nano.</em></p>]]></description>
 </item><item>
     <title>Jetson Nano Setup</title>
@@ -29,7 +29,7 @@
     <author>Author</author>
     <guid>http://stashi.top/jetson_nano_setup/</guid>
     <description><![CDATA[<div class="featured-image">
-                <img src="/images/Jetson_Nano_Setup.jpg" referrerpolicy="no-referrer">
+                <img src="/images/Jetson_Nano_Setup/Cover.jpg" referrerpolicy="no-referrer">
             </div><p><em>This is a Quick Start for Jetson Nano.</em></p>]]></description>
 </item></channel>
 </rss>

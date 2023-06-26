@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "style.min.css",
-	"sourceRoot": "/Users/shilongxing/Documents/Hugo/sta-shi",
+	"sourceRoot": "C:/Users/56484/OneDrive/Documents/stashi/sites/stashi",
 	"sources": [
 		"themes/LoveIt/assets/css/style.scss",
 		"themes/LoveIt/assets/css/_variables.scss",

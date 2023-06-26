@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://stashi.top/jetson_nano_setup/" /><meta property="og:image" content="http://stashi.top/avatar.jpg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-02T12:14:37+08:00" />
-<meta property="article:modified_time" content="2022-03-12T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-02T12:14:37+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="http://stashi.top/avatar.jpg"/>
@@ -29,8 +29,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/stashi.top\/jetson_nano_setup\/"
-        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  461 ,
-        "url": "http:\/\/stashi.top\/jetson_nano_setup\/","datePublished": "2022-03-02T12:14:37+08:00","dateModified": "2022-03-12T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "Article, Jetson Nano","wordcount":  342 ,
+        "url": "http:\/\/stashi.top\/jetson_nano_setup\/","datePublished": "2022-03-02T12:14:37+08:00","dateModified": "2022-03-02T12:14:37+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -120,16 +120,16 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Jetson Nano Setup</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>stashi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;461 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-02">2022-03-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;342 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="featured-image"><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="images/Jetson_Nano_Setup.jpg"
-        data-srcset="/images/Jetson_Nano_Setup.jpg, images/Jetson_Nano_Setup.jpg 1.5x, /images/Jetson_Nano_Setup.jpg 2x"
+        data-src="images/Jetson_Nano_Setup/Cover.jpg"
+        data-srcset="/images/Jetson_Nano_Setup/Cover.jpg, images/Jetson_Nano_Setup/Cover.jpg 1.5x, /images/Jetson_Nano_Setup/Cover.jpg 2x"
         data-sizes="auto"
-        alt="/images/Jetson_Nano_Setup.jpg"
-        title="/images/Jetson_Nano_Setup.jpg" /></div><div class="details toc" id="toc-static"  kept="true">
+        alt="/images/Jetson_Nano_Setup/Cover.jpg"
+        title="/images/Jetson_Nano_Setup/Cover.jpg" /></div><div class="details toc" id="toc-static"  kept="true">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
@@ -141,12 +141,6 @@
         <li><a href="#overview">Overview</a></li>
         <li><a href="#write-image-to-microsd-card">Write Image to microSD Card</a></li>
         <li><a href="#first-boot">First Boot</a></li>
-      </ul>
-    </li>
-    <li><a href="#change-source">Change Source</a>
-      <ul>
-        <li><a href="#change-ubuntu-source">Change Ubuntu Source</a></li>
-        <li><a href="#install-and-change-pip3-source">Install and Change pip3 Source</a></li>
       </ul>
     </li>
     <li><a href="#pytorch">Pytorch</a>
@@ -162,13 +156,6 @@
         <li><a href="#verification-1">Verification</a></li>
       </ul>
     </li>
-    <li><a href="#jupyterlab">JupyterLab</a>
-      <ul>
-        <li><a href="#installation-2">Installation</a></li>
-        <li><a href="#setting">Setting</a></li>
-        <li><a href="#usage">Usage</a></li>
-      </ul>
-    </li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
@@ -176,14 +163,14 @@
 <p><em>Board used in this article is Jetson Nano 2GB.</em></p>
 <h2 id="setup">Setup</h2>
 <h3 id="overview">Overview</h3>
-<figure><a class="lightgallery" href="/images/Jetson_Nano_2GB.png" title="/images/Jetson_Nano_2GB.png" data-thumbnail="/images/Jetson_Nano_2GB.png" data-sub-html="<h2>Jetson Nano 2GB</h2>">
+<figure><a class="lightgallery" href="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png" title="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png" data-thumbnail="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png" data-sub-html="<h2>Jetson Nano 2GB</h2>">
         <img
             class="lazyload"
             src="/svg/loading.min.svg"
-            data-src="/images/Jetson_Nano_2GB.png"
-            data-srcset="/images/Jetson_Nano_2GB.png, /images/Jetson_Nano_2GB.png 1.5x, /images/Jetson_Nano_2GB.png 2x"
+            data-src="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png"
+            data-srcset="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png, /images/Jetson_Nano_Setup/Jetson_Nano_2GB.png 1.5x, /images/Jetson_Nano_Setup/Jetson_Nano_2GB.png 2x"
             data-sizes="auto"
-            alt="/images/Jetson_Nano_2GB.png" />
+            alt="/images/Jetson_Nano_Setup/Jetson_Nano_2GB.png" />
     </a><figcaption class="image-caption">Jetson Nano 2GB</figcaption>
     </figure>
 <table>
@@ -232,48 +219,22 @@
 <li>Connect monitor, keyboard, mouse and USB-C power supply (5V⎓3A)</li>
 <li>Boot and setup</li>
 </ol>
-<h2 id="change-source">Change Source</h2>
-<h3 id="change-ubuntu-source">Change Ubuntu Source</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/apt/sources.list
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># delete all contents</span>
-</span></span><span class="line"><span class="cl">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic main restricted universe multiverse
-</span></span><span class="line"><span class="cl">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-updates main restricted universe multiverse
-</span></span><span class="line"><span class="cl">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-backports main restricted universe multiverse
-</span></span><span class="line"><span class="cl">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports/ bionic-security main restricted universe multiverse
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="install-and-change-pip3-source">Install and Change pip3 Source</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install python3-pip
-</span></span><span class="line"><span class="cl">pip config <span class="nb">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h2 id="pytorch">Pytorch</h2>
+<h2 id="pytorch">Pytorch</h2>
 <h3 id="pytorch-pip-wheels">PyTorch pip wheels</h3>
 <p>Will install PyTorch v1.10.0 since the image is embedded with JetPack 4.6.</p>
 <h3 id="installation">Installation</h3>
 <ol>
+<li>
+<p>Install pip3</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install python3-pip
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
 <li>
 <p>Install Pytorch</p>
 <div class="highlight"><div class="chroma">
@@ -363,16 +324,14 @@
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
-</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get update
 </span></span><span class="line"><span class="cl">sudo apt-get install libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
 </span></span><span class="line"><span class="cl">sudo apt-get install python3-pip
-</span></span><span class="line"><span class="cl">pip3 install -U pip testresources <span class="nv">setuptools</span><span class="o">==</span>49.6.0 
 </span></span><span class="line"><span class="cl">pip3 install -U --no-deps <span class="nv">numpy</span><span class="o">==</span>1.19.4 <span class="nv">future</span><span class="o">==</span>0.18.2 <span class="nv">mock</span><span class="o">==</span>3.0.5 <span class="nv">keras_preprocessing</span><span class="o">==</span>1.1.2 <span class="nv">keras_applications</span><span class="o">==</span>1.0.8 <span class="nv">gast</span><span class="o">==</span>0.4.0 protobuf pybind11 cython pkgconfig
-</span></span><span class="line"><span class="cl">env <span class="nv">H5PY_SETUP_REQUIRES</span><span class="o">=</span><span class="m">0</span> pip3 install -U <span class="nv">h5py</span><span class="o">==</span>3.1.0
-</span></span><span class="line"><span class="cl"><span class="c1"># if h5py installation failed, try &#34;pip3 install h5py&#34;, which will install h5py 2.10.0</span>
+</span></span><span class="line"><span class="cl">sudo env <span class="nv">H5PY_SETUP_REQUIRES</span><span class="o">=</span><span class="m">0</span> pip3 install -U <span class="nv">h5py</span><span class="o">==</span>3.1.0
+</span></span><span class="line"><span class="cl">pip3 install -U pip testresources <span class="nv">setuptools</span><span class="o">==</span>49.6.0 
 </span></span><span class="line"><span class="cl">pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v46 tensorflow
 </span></span></code></pre></td></tr></table>
 </div>
@@ -393,56 +352,6 @@
 <pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">tensorflow</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="jupyterlab">JupyterLab</h2>
-<h3 id="installation-2">Installation</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pip3 install <span class="nv">jupyterlab</span><span class="o">==</span><span class="m">3</span>
-</span></span><span class="line"><span class="cl">jupyter lab --generate-config
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="setting">Setting</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /home/jetson/.jupyter/jupyter_lab_config.py
-</span></span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># copy to front of the file</span>
-</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">.</span><span class="n">ServerApp</span><span class="o">.</span><span class="n">allow_remote_access</span> <span class="o">=</span> <span class="kc">True</span>
-</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">.</span><span class="n">ExtensionApp</span><span class="o">.</span><span class="n">open_browser</span> <span class="o">=</span> <span class="kc">False</span>
-</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">.</span><span class="n">ServerApp</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s1">&#39;0.0.0.0&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">.</span><span class="n">ServerApp</span><span class="o">.</span><span class="n">password_required</span> <span class="o">=</span> <span class="kc">False</span>
-</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">.</span><span class="n">ServerApp</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">8888</span>
-</span></span><span class="line"><span class="cl"><span class="n">c</span><span class="o">.</span><span class="n">ServerApp</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="usage">Usage</h3>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">jupyter lab 
-</span></span></code></pre></td></tr></table>
-</div>
 </div><h2 id="reference">Reference</h2>
 <ol>
 <li><a href="https://www.zhihu.com/column/c_1093559321706819584" target="_blank" rel="noopener noreffer">Zhihu - Jetson Nano 快速入门</a></li>
@@ -451,14 +360,14 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-03-12</span>
+                <span>Updated on 2022-03-02</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://stashi.top/jetson_nano_setup/" data-title="Jetson Nano Setup" data-hashtags="Article,Jetson Nano"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://stashi.top/jetson_nano_setup/" data-hashtag="Article"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://stashi.top/jetson_nano_setup/" data-title="Jetson Nano Setup" data-image="images/Jetson_Nano_Setup.jpg"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="http://stashi.top/jetson_nano_setup/" data-title="Jetson Nano Setup"><i class="fab fa-evernote fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Twitter" data-sharer="twitter" data-url="http://stashi.top/jetson_nano_setup/" data-title="Jetson Nano Setup" data-hashtags="Article,Jetson Nano"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://stashi.top/jetson_nano_setup/" data-hashtag="Article"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://stashi.top/jetson_nano_setup/" data-title="Jetson Nano Setup" data-image="images/Jetson_Nano_Setup/Cover.jpg"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="Share on Evernote" data-sharer="evernote" data-url="http://stashi.top/jetson_nano_setup/" data-title="Jetson Nano Setup"><i class="fab fa-evernote fa-fw"></i></a></span>
             </div>
         </div>
     </div>
@@ -475,7 +384,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">On the Boulevard of Broken Dreams</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">stashi</a></span></div>
+        <div class="footer-container"><div class="footer-line">On the Boulevard of Broken Dreams</div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">stashi</a></span></div>
         </div>
     </footer></div>
 

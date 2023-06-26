@@ -7,7 +7,7 @@ This is a guide for TensorRT optimization.
 
 ## Overview
 
-{{< image src="/images/Keras_to_TensorRT.png" caption="Convert Keras Model to TensorRT" >}}
+{{< image src="/images/Jetson_Nano_TensorRT/Keras_to_TensorRT.jpg" caption="Convert Keras Model to TensorRT" >}}
 
 Tensorflow has two versions: v1 and v2. v2 has a poor compatiblity to v1. On aurthor's unit the code doesn't work (some modules cannot be found), so I reinstalled Tensorflow 1.15.0 and re-trained the model (since Keras can't operate models trained by higher vesion). Also, it's found inconvenient to download wheel from NVIDIA download website in China. I download wheel from other device and install Tensorflow with pip3 wheel tool. 
 

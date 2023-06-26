@@ -5,7 +5,7 @@
 
 <!--more-->
 
-## Use ImageNet on Jetson
+## Using ImageNet on Jetson
 
 ```bash
 git clone --recursive https://github.com/dusty-nv/jetson-inference
@@ -21,65 +21,9 @@ cd build/aarch64/bin
 ./imagenet "images/cat_*.jpg" "images/test/cat_%i.jpg"
 ```
 
-## Train Keras Model and Perform Inference
+## Training Keras Model and Perform Inference
 
-Download and extract four .gz files from [MNIST Database](yann.lecun.com/exdb/mnist).
-
-### Convert MNIST ubyte to Images
-
-Please create folders like './dataset/mnist/training/0' in advance.
-
-```python
-import numpy as np
-import cv2
-import os
-import struct
-
-def save_mnist_to_jpg(mnist_image_file, mnist_label_file, save_dir):
-    if 'train' in os.path.basename(mnist_image_file):
-        prefix = 'train'
-    else:
-        prefix = 'test'
-
-    labelIndex = 0
-    imageIndex = 0
-    i = 0
-    lbdata = open(mnist_label_file, 'rb').read()
-    magic, nums = struct.unpack_from(">II", lbdata, labelIndex)
-    labelIndex += struct.calcsize('>II')
-
-    imgdata = open(mnist_image_file, "rb").read()
-    magic, nums, numRows, numColumns = struct.unpack_from('>IIII', imgdata, imageIndex)
-    imageIndex += struct.calcsize('>IIII')
-
-    for i in range(nums):
-        label = struct.unpack_from('>B', lbdata, labelIndex)[0]
-        labelIndex += struct.calcsize('>B')
-        im = struct.unpack_from('>784B', imgdata, imageIndex)
-        imageIndex += struct.calcsize('>784B')
-        im = np.array(im, dtype='uint8')
-        img = im.reshape(28, 28)
-        save_name = os.path.join(save_dir, '{}'.format(label), '{}{}_{}.jpg'.format(prefix, i, label))
-        cv2.imwrite(save_name, img)
-
-
-if __name__ == '__main__':
-    train_images = './train-images-idx3-ubyte'
-    train_labels = './train-labels-idx1-ubyte'
-    test_images = './t10k-images-idx3-ubyte'
-    test_labels = './t10k-labels-idx1-ubyte'
-
-    save_train_dir = './dataset/mnist/training'
-    save_test_dir = './dataset/mnist/testing'
-
-    if not os.path.exists(save_train_dir):
-        os.makedirs(save_train_dir)
-    if not os.path.exists(save_test_dir):
-        os.makedirs(save_test_dir)
-
-    save_mnist_to_jpg(test_images, test_labels, save_test_dir)
-    save_mnist_to_jpg(train_images, train_labels, save_train_dir)
-```
+Download MNIST dataset and copy it to "dataset/mnist".
 
 ### Read Input Images
 
@@ -94,8 +38,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 # config
 img_width, img_height = 28,28 #width & height of input image
 input_depth = 1 #1: gray image
-train_data_dir = './dataset/mnist/training' #data training path
-testing_data_dir = './dataset/mnist/testing' #data testing path
+train_data_dir = 'dataset/mnist/training' #data training path
+testing_data_dir = 'dataset/mnist/testing' #data testing path
 epochs = 2 #number of training epoch
 batch_size = 5 #training batch size
 
@@ -189,10 +133,6 @@ model.fit_generator(
 
 ```python
 print("Training is done!")
-
-if not os.path.exists('./model'):
-		os.makedirs('./model')
-
 model.save('./model/modelLeNet5.h5')
 print("Model is successfully stored!")
 ```
@@ -207,8 +147,8 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # read the input image using Pillow (you can use another library, e.g., OpenCV)
-img1= Image.open("dataset/mnist/testing/0/test3_0.jpg")
-img2= Image.open("dataset/mnist/testing/1/test2_1.jpg")
+img1= Image.open("dataset/mnist/testing/0/img_108.jpg")
+img2= Image.open("dataset/mnist/testing/1/img_0.jpg")
 # convert to ndarray numpy
 img1 = np.asarray(img1)
 img2 = np.asarray(img2)
@@ -235,7 +175,6 @@ plt.show()
 ## Reference
 
 1. [NVIDIA - Jetson Inference](https://github.com/dusty-nv/jetson-inference)
-1. [hashot - 将mnist数据集转换为JPG图片]()
 2. [Ardian Uman - Tenorflow-TensorRT](https://github.com/ardianumam/Tensorflow-TensorRT)
 
 
